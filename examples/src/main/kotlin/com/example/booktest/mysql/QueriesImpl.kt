@@ -101,11 +101,11 @@ class QueriesImpl(private val conn: Connection) : Queries {
       val ret = mutableListOf<BooksByTagsRow>()
       while (results.next()) {
           ret.add(BooksByTagsRow(
-                results.getInt(1),
-                results.getString(2),
-                results.getString(3),
-                results.getString(4),
-                results.getString(5)
+                results.getObject(1) as Int,
+                results.getObject(2) as String,
+                results.getObject(3) as String?,
+                results.getObject(4) as String,
+                results.getObject(5) as String
             ))
       }
       ret
@@ -122,14 +122,14 @@ class QueriesImpl(private val conn: Connection) : Queries {
       val ret = mutableListOf<Book>()
       while (results.next()) {
           ret.add(Book(
-                results.getInt(1),
-                results.getInt(2),
-                results.getString(3),
+                results.getObject(1) as Int,
+                results.getObject(2) as Int,
+                results.getObject(3) as String,
                 BooksBookType.lookup(results.getString(4))!!,
-                results.getString(5),
-                results.getInt(6),
+                results.getObject(5) as String,
+                results.getObject(6) as Int,
                 results.getObject(7, LocalDateTime::class.java),
-                results.getString(8)
+                results.getObject(8) as String
             ))
       }
       ret
@@ -208,8 +208,8 @@ class QueriesImpl(private val conn: Connection) : Queries {
         return null
       }
       val ret = Author(
-                results.getInt(1),
-                results.getString(2)
+                results.getObject(1) as Int,
+                results.getObject(2) as String
             )
       if (results.next()) {
           throw SQLException("expected one row in result set, but got many")
@@ -228,14 +228,14 @@ class QueriesImpl(private val conn: Connection) : Queries {
         return null
       }
       val ret = Book(
-                results.getInt(1),
-                results.getInt(2),
-                results.getString(3),
+                results.getObject(1) as Int,
+                results.getObject(2) as Int,
+                results.getObject(3) as String,
                 BooksBookType.lookup(results.getString(4))!!,
-                results.getString(5),
-                results.getInt(6),
+                results.getObject(5) as String,
+                results.getObject(6) as Int,
                 results.getObject(7, LocalDateTime::class.java),
-                results.getString(8)
+                results.getObject(8) as String
             )
       if (results.next()) {
           throw SQLException("expected one row in result set, but got many")

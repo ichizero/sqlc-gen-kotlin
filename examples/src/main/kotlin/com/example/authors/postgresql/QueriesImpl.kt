@@ -45,9 +45,9 @@ class QueriesImpl(private val conn: Connection) : Queries {
         return null
       }
       val ret = Author(
-                results.getLong(1),
-                results.getString(2),
-                results.getString(3)
+                results.getObject(1) as Long,
+                results.getObject(2) as String,
+                results.getObject(3) as String?
             )
       if (results.next()) {
           throw SQLException("expected one row in result set, but got many")
@@ -75,9 +75,9 @@ class QueriesImpl(private val conn: Connection) : Queries {
         return null
       }
       val ret = Author(
-                results.getLong(1),
-                results.getString(2),
-                results.getString(3)
+                results.getObject(1) as Long,
+                results.getObject(2) as String,
+                results.getObject(3) as String?
             )
       if (results.next()) {
           throw SQLException("expected one row in result set, but got many")
@@ -94,9 +94,9 @@ class QueriesImpl(private val conn: Connection) : Queries {
       val ret = mutableListOf<Author>()
       while (results.next()) {
           ret.add(Author(
-                results.getLong(1),
-                results.getString(2),
-                results.getString(3)
+                results.getObject(1) as Long,
+                results.getObject(2) as String,
+                results.getObject(3) as String?
             ))
       }
       ret
