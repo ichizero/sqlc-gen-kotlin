@@ -30,7 +30,7 @@ class QueriesImpl(private val conn: Connection) : Queries {
       if (!results.next()) {
         return null
       }
-      val ret = results.getLong(1)
+      val ret = results.getObject(1) as Long
       if (results.next()) {
           throw SQLException("expected one row in result set, but got many")
       }
@@ -55,8 +55,8 @@ class QueriesImpl(private val conn: Connection) : Queries {
       val ret = mutableListOf<Pilot>()
       while (results.next()) {
           ret.add(Pilot(
-                results.getInt(1),
-                results.getString(2)
+                results.getObject(1) as Int,
+                results.getObject(2) as String
             ))
       }
       ret

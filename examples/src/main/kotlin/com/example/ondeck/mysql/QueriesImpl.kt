@@ -158,8 +158,8 @@ class QueriesImpl(private val conn: Connection) : Queries {
         return null
       }
       val ret = City(
-                results.getString(1),
-                results.getString(2)
+                results.getObject(1) as String,
+                results.getObject(2) as String
             )
       if (results.next()) {
           throw SQLException("expected one row in result set, but got many")
@@ -179,15 +179,15 @@ class QueriesImpl(private val conn: Connection) : Queries {
         return null
       }
       val ret = Venue(
-                results.getLong(1),
+                results.getObject(1) as Long,
                 VenueStatus.lookup(results.getString(2))!!,
-                results.getString(3),
-                results.getString(4),
-                results.getString(5),
-                results.getString(6),
-                results.getString(7),
-                results.getString(8),
-                results.getString(9),
+                results.getObject(3) as String?,
+                results.getObject(4) as String,
+                results.getObject(5) as String,
+                results.getObject(6) as String,
+                results.getObject(7) as String,
+                results.getObject(8) as String?,
+                results.getObject(9) as String?,
                 results.getTimestamp(10).toInstant()
             )
       if (results.next()) {
@@ -205,8 +205,8 @@ class QueriesImpl(private val conn: Connection) : Queries {
       val ret = mutableListOf<City>()
       while (results.next()) {
           ret.add(City(
-                results.getString(1),
-                results.getString(2)
+                results.getObject(1) as String,
+                results.getObject(2) as String
             ))
       }
       ret
@@ -222,15 +222,15 @@ class QueriesImpl(private val conn: Connection) : Queries {
       val ret = mutableListOf<Venue>()
       while (results.next()) {
           ret.add(Venue(
-                results.getLong(1),
+                results.getObject(1) as Long,
                 VenueStatus.lookup(results.getString(2))!!,
-                results.getString(3),
-                results.getString(4),
-                results.getString(5),
-                results.getString(6),
-                results.getString(7),
-                results.getString(8),
-                results.getString(9),
+                results.getObject(3) as String?,
+                results.getObject(4) as String,
+                results.getObject(5) as String,
+                results.getObject(6) as String,
+                results.getObject(7) as String,
+                results.getObject(8) as String?,
+                results.getObject(9) as String?,
                 results.getTimestamp(10).toInstant()
             ))
       }
@@ -266,8 +266,8 @@ class QueriesImpl(private val conn: Connection) : Queries {
       val ret = mutableListOf<VenueCountByCityRow>()
       while (results.next()) {
           ret.add(VenueCountByCityRow(
-                results.getString(1),
-                results.getLong(2)
+                results.getObject(1) as String,
+                results.getObject(2) as Long
             ))
       }
       ret
