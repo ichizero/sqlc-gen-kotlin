@@ -6,17 +6,23 @@ on:
   pull_request:
 jobs:
   test:
-    name: test
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os:
+          - ubuntu-24.04
+          - macos-14
+        cgo: ["1", "0"]
+    name: test ${{ matrix.os }} cgo=${{ matrix.cgo }}
+    runs-on: ${{ matrix.os }}
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-go@v5
-      with:
-        go-version: '1.23.5'
-    # - run: go install github.com/sqlc-dev/sqlc/cmd/sqlc@main
-    - uses: sqlc-dev/setup-sqlc@v4
-      with:
-        sqlc-version: '1.28.0'
-    - run: make
-    - run: sqlc diff
-      working-directory: examples
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.23.5"
+      # - run: go install github.com/sqlc-dev/sqlc/cmd/sqlc@main
+      - uses: sqlc-dev/setup-sqlc@v4
+        with:
+          sqlc-version: "1.28.0"
+      - run: make
+      - run: sqlc diff
+        working-directory: examples
