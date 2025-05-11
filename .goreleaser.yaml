@@ -1,0 +1,34 @@
+# yaml-language-server: $schema=https://goreleaser.com/static/schema.json
+version: 2
+
+builds:
+  - id: sqlc-gen-kotlin-ichi
+    main: "./plugin"
+    binary: sqlc-gen-kotlin-ichi
+    flags:
+      - -trimpath
+    ldflags:
+      - -s -w
+    goos:
+      - wasip1
+    goarch:
+      - wasm
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"
+
+report_sizes: true
+
+dist: "./bin"
+
+archives:
+  - formats:
+      - binary
+    name_template: "{{ .Binary }}_{{ .Version }}"
+
+release:
+  draft: true
